@@ -5,26 +5,23 @@ class BackGround extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        Login(),
-        Positioned(
-            top: 0.0,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 300.0,
-              decoration: const BoxDecoration(
-                  color: Color(0xFFF2884C),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(100.0),
-                      bottomRight: Radius.circular(100.0))),
-            )),
-        Positioned(top: 15.0, child: Titulo()),
-        Positioned(top: 40.0, child: Texto()),
-        Positioned(top: 120.0, child: GatoLogin()),
-      ],
-    );
+    return Scaffold(
+        body: Stack(children: <Widget>[
+      Container(
+          margin: EdgeInsets.only(top: 0.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 300.0,
+            decoration: const BoxDecoration(
+                color: Color(0xFFF2884C),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(100.0),
+                    bottomRight: Radius.circular(100.0))),
+          )),
+      TituloText(),
+      DescripcionText(),
+      GatoLoginImage()
+    ]));
   }
 }
 
@@ -34,35 +31,40 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-          physics: ClampingScrollPhysics(), child: Cuerpo()),
-    );
+        body: Stack(
+      children: <Widget>[BackGround(), Cuerpo()],
+    ));
   }
 }
 
-Widget Cuerpo() {
-  return Container(
-    child: Column(
-      //mainAxisAlignment: MainAxisAlignment.center,
+class Cuerpo extends StatelessWidget {
+  const Cuerpo({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: SingleChildScrollView(
+            child: Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Row(
-          children: <Widget>[TextoCorreo(), TextFieldCorreo()],
+          children: <Widget>[CorreoText(), CorreoTextField()],
         ),
         Row(
-          children: <Widget>[TextoContrasena(), TextFieldContrasena()],
+          children: <Widget>[ContrasenaText(), ContrasenaTextField()],
         ),
         SizedBox(height: 20.0),
-        BotonInicio(),
-        TextRecuperarContrasena(),
-        TextRegistrate()
+        InicioButton(),
+        RecuperarContrasenaButton(),
+        RegistrateButton()
       ],
-    ),
-  );
+    )));
+  }
 }
 
-Widget TextoCorreo() {
+Widget CorreoText() {
   return Container(
-    margin: const EdgeInsets.only(top: 420.0, left: 30.0, right: 40.0),
+    margin: const EdgeInsets.only(top: 400.0, left: 30.0, right: 40.0),
     child: const Text(
       "CORREO",
       style: TextStyle(
@@ -76,11 +78,11 @@ Widget TextoCorreo() {
   );
 }
 
-Widget TextFieldCorreo() {
+Widget CorreoTextField() {
   return Container(
     width: 200.0,
     height: 38.0,
-    margin: const EdgeInsets.only(top: 420.0, left: 23.0),
+    margin: const EdgeInsets.only(top: 400.0, left: 23.0),
     child: TextField(
         decoration: InputDecoration(
             filled: true,
@@ -91,7 +93,7 @@ Widget TextFieldCorreo() {
   );
 }
 
-Widget TextoContrasena() {
+Widget ContrasenaText() {
   return Container(
     margin: const EdgeInsets.only(top: 25.0, left: 30.0, right: 8.0),
     child: const Text(
@@ -107,7 +109,7 @@ Widget TextoContrasena() {
   );
 }
 
-Widget TextFieldContrasena() {
+Widget ContrasenaTextField() {
   return Container(
     width: 200.0,
     height: 38.0,
@@ -123,7 +125,7 @@ Widget TextFieldContrasena() {
   );
 }
 
-Widget BotonInicio() {
+Widget InicioButton() {
   return MaterialButton(
       color: Color(0xFF3E567C),
       minWidth: 200.0,
@@ -142,38 +144,49 @@ Widget BotonInicio() {
       });
 }
 
-Widget TextRecuperarContrasena() {
-  return TextButton(
-      child: Text(
-        '¿Ovidaste tu contraseña?',
-        style: TextStyle(color: Color(0xFF3B3B3B)),
-      ),
-      onPressed: () {
-        print('Botón funcionando');
-      });
+Widget RecuperarContrasenaButton() {
+  return SizedBox(
+      height: 35,
+      child: TextButton(
+        child: Text(
+          '¿Ovidaste tu contraseña?',
+          style: TextStyle(color: Color(0xFF3B3B3B), fontSize: 15.0),
+        ),
+        onPressed: () {
+          print('Botón funcionando');
+        },
+      ));
 }
 
-Widget TextRegistrate() {
-  return TextButton(
-      child: Text('Resgistrate', style: TextStyle(color: Color(0xFF3B3B3B))),
-      onPressed: () {
-        print('Botón funcionando');
-      });
+Widget RegistrateButton() {
+  return SizedBox(
+      height: 35,
+      child: TextButton(
+        child: Text('Resgistrate',
+            style: TextStyle(color: Color(0xFF3B3B3B), fontSize: 15.0)),
+        onPressed: () {
+          print('Botón funcionando');
+        },
+      ));
 }
 
-Widget GatoLogin() {
-  return Center(
-    child: Image(
-      image: AssetImage("assets/Imagenes/gatoLogin.png"),
-      width: 268.0,
-      height: 301.0,
-      alignment: Alignment.center,
+Widget GatoLoginImage() {
+  return Container(
+    height: 300.0,
+    margin: EdgeInsets.only(top: 100.0),
+    child: Center(
+      child: Image(
+          image: AssetImage("assets/Imagenes/gatoLogin.png"),
+          width: 268.0,
+          height: 301.0),
     ),
   );
 }
 
-Widget Titulo() {
+Widget TituloText() {
   return Container(
+    margin: EdgeInsets.only(top: 15.0),
+    alignment: Alignment.topCenter,
     child: const Text(
       "Petio",
       style: TextStyle(
@@ -186,9 +199,10 @@ Widget Titulo() {
   );
 }
 
-Widget Texto() {
+Widget DescripcionText() {
   return Container(
-    margin: EdgeInsets.only(top: 45.0),
+    margin: EdgeInsets.only(top: 80.0),
+    alignment: Alignment.topCenter,
     child: const Text(
       "Una mascota para tu hogar",
       style: TextStyle(
