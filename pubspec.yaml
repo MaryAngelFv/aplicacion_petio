@@ -89,6 +89,7 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/Imagenes/gatoLogin.png
+    - assets/Imagenes/animalesRegistro.png
   
   fonts:
     - family: BebasNeue
